@@ -8,13 +8,13 @@ hnum = sys.argv[1]
 base = sys.argv[2]
 n_snaps = int(sys.argv[3])
 
-mypsf = 'geoalkali_ox_wb_rot_ionized.psf'
+mypsf = 'omcs_2chains_ox_wb_ionized.psf'
 text_filename = '%s.txt' % hnum
 
 print('Setting up Q-Chem calculations')
 
 for i in range(n_snaps):
-	mypdb = 'pdb_files/geoalkali_ox_snap_%s.pdb' % i
+	mypdb = '%s_%s.pdb' % (base,i)
 
 	for state in ['oxidized','reduced']:
 		if state == 'oxidized':
