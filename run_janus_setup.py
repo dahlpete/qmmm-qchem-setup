@@ -5,8 +5,7 @@ import build_qmmm_struct_v5 as build
 import subprocess
 
 hnum = sys.argv[1]
-#base = sys.argv[2]
-base = 'omcs_ox_snap'
+base = sys.argv[2]
 n_snaps = int(sys.argv[3])
 
 mypsf = 'omcs_2chains_ox_wb_ionized.psf'
