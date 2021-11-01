@@ -1,0 +1,5 @@
+HEO     412     Z       FE
+CYS     9       B       B
+CYS     12      B       B
+HIS     13      B       B
+HIS     147     B       B
