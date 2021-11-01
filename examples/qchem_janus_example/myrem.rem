@@ -1,0 +1,65 @@
+$comment
+QMMM Janus Model for OmcS Hemes
+Surface : Fully oxidized surface
+$end
+
+$rem
+QM_MM_INTERFACE JANUS
+FORCE_FIELD CHARMM27
+USER_CONNECT TRUE
+MODEL_SYSTEM_CHARGE -1
+MODEL_SYSTEM_MULT 2
+JOBTYPE sp
+EXCHANGE omegaB97X-D
+BASIS  gen
+SCF_CONVERGENCE 6
+SCF_ALGORITHM=DIIS_GDM
+MAX_SCF_CYCLES 200
+THRESH 12
+VARTHRESH = FALSE
+INCDFT = FALSE
+PURECART   2 
+SOLVENT_METHOD = PCM
+$end
+
+$pcm
+THEORY CPCM
+$end
+
+$solvent
+DIELECTRIC 78.39
+OpticalDielectric 1.78
+$end
+
+$van_der_waals
+1
+26 2.0
+$end
+
+$forceman
+NoQM-QMorQM-MMvdw
+$end
+
+$basis
+FE 0
+VDZ
+****
+C 0
+cc-pVDZ
+****
+H 0
+cc-pVDZ
+****
+O 0
+cc-pVDZ
+****
+S 0
+cc-pVDZ
+****
+N 0
+cc-pVDZ
+****
+$end
+
+
+
