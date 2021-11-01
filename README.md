@@ -53,6 +53,8 @@ QChem QMMM setup USAGE: ./run_qmmm_setup.py {textfile} {basename} {num snapshots
       
         The run_qmmm_setup.py script needs to be updated with the user's
         file paths. 
+        
+        For the qchem example and qchem janus example, use omcs_ox_snap for the basename
     
 ** Note: The header of the run scripts should be updated with the path to
          the user's version of Python3 (must have MDAnalysis downloaded)
