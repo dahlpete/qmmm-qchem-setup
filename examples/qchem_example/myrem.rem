@@ -1,0 +1,39 @@
+$comment
+Electrostatic embedding for cytochrome system
+Surface : Fully oxidized surface
+$end
+
+$rem
+JOBTYPE sp
+EXCHANGE omegaB97X-D
+BASIS  gen
+SCF_CONVERGENCE 6
+SCF_ALGORITHM=DIIS_GDM
+MAX_SCF_CYCLES 200
+THRESH 12
+VARTHRESH = FALSE
+INCDFT = FALSE
+PURECART   2 
+$end
+
+$basis
+FE 0
+VDZ
+****
+C 0
+cc-pVDZ
+****
+H 0
+cc-pVDZ
+****
+O 0
+cc-pVDZ
+****
+S 0
+cc-pVDZ
+****
+N 0
+cc-pVDZ
+****
+$end
+
