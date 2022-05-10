@@ -7,6 +7,7 @@ $rem
 JOBTYPE sp
 EXCHANGE omegaB97X-D
 BASIS  gen
+ECP fit-lanl2dz
 SCF_CONVERGENCE 6
 SCF_ALGORITHM=DIIS_GDM
 MAX_SCF_CYCLES 200
@@ -18,7 +19,7 @@ $end
 
 $basis
 FE 0
-VDZ
+lanl2dz
 ****
 C 0
 cc-pVDZ
