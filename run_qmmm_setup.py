@@ -1,20 +1,20 @@
 #!/gpfs/loomis/project/batista/pd455/conda_envs/mdanalysis/bin/python
 
 import sys
-import build_qmmm_struct_v4 as build
+import build_qmmm_struct_v5 as build
 import subprocess
 
-hnum = sys.argv[1]
-base = sys.argv[2]
-n_snaps = int(sys.argv[3])
+#hnum = sys.argv[1]
+base = sys.argv[1]
+n_snaps = int(sys.argv[2])
 
-mypsf = 'omcs_2chains_ox_wb_ionized.psf'
-text_filename = '%s.txt' % hnum
+mypsf = '../../snapshots/omcs_2chains_ox_wb_ionized.psf'
+text_filename = 'qm.txt'
 
 print('Setting up Q-Chem calculations')
 
 for i in range(n_snaps):
-	mypdb = '%s_%s.pdb' % (base,i)
+	mypdb = '../../snapshots/%s_%s.pdb' % (base,i)
 
 	for state in ['oxidized','reduced']:
 		if state == 'oxidized':
@@ -25,13 +25,23 @@ for i in range(n_snaps):
 			qm_multiplicity = 1
 
 		if i == 0:
-			shellcommand = "mkdir %s_%s" % (hnum,state)
+			shellcommand = "mkdir %s" % (state)
 			subprocess.run([shellcommand],shell=True)
 			
 		
-		ofilename = '%s_%s/%s_%s_on_%s_%s' % (hnum,state,hnum,state,base,i)
+		ofilename = '%s/%s_on_%s_%s' % (state,state,base,i)
 		
 		qlist = build.text2list(text_filename)
 		seltext,caplist,zcharge = build.selection_text(qlist,mode='sc')
 
-		build.struct_generator(mypsf,mypdb,seltext,caplist,ofile=ofilename,ftype='qchem',rem='myrem.rem',charge=qm_charge,mult=qm_multiplicity,mm=True,zerocharge=zcharge)
+		build.struct_generator(mypsf,
+				       mypdb,
+				       seltext,
+				       caplist,
+				       ofile = ofilename,
+				       ftype='qchem',
+				       rem='myrem.rem',
+				       charge=qm_charge,
+				       mult=qm_multiplicity,
+				       mm=True,
+				       zerocharge=zcharge)
