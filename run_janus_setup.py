@@ -1,36 +1,43 @@
-#!/gpfs/loomis/project/batista/pd455/conda_envs/mdanalysis/bin/python
+#!{path2python}/python
 
 import sys
-import build_qmmm_struct_v5 as build
+import build_qmmm_struct_v11 as build
 import subprocess
 
-hnum = sys.argv[1]
-base = sys.argv[2]
-n_snaps = int(sys.argv[3])
+base = sys.argv[1]
+nsnaps = int(sys.argv[2])
 
-mypsf = 'omcs_2chains_ox_wb_ionized.psf'
-text_filename = '%s.txt' % hnum
+mypsf = '{psf_filename}.psf'
+text_filename = 'qm.txt' 
 
 print('Setting up Q-Chem calculations')
 
-for i in range(n_snaps):
-	mypdb = '%s_%s.pdb' % (base,i)
+	
+qlist = build.text2list(text_filename)
+my_seltext,caplist,zcharge = build.selection_text(qlist,mode='sc')
 
-	for state in ['oxidized','reduced']:
-		if state == 'oxidized':
-			qm_charge = -1
-			qm_multiplicity = 2
-		elif state == 'reduced':
-			qm_charge = -2
-			qm_multiplicity = 1
+state = 'qmmm_dir'
 
-		if i == 0:
-			shellcommand = "mkdir %s_%s" % (hnum,state)
-			subprocess.run([shellcommand],shell=True)
-			
-		
-		ofilename = '%s_%s/%s_%s_on_%s_%s' % (hnum,state,hnum,state,base,i)
-		
-		qlist = build.text2list(text_filename)
-		seltext,caplist,zcharge = build.selection_text(qlist,mode='sc')
-		build.struct_generator(mypsf,mypdb,seltext,caplist,ofile=ofilename,ftype='qchem',rem='myrem.rem',charge=qm_charge,mult=qm_multiplicity,mm=True,qmmm_mode='janus',zerocharge=zcharge)
+for i in range(nsnaps):
+	mypdb = '{path2pdbfiles}/%s_%s.pdb' % (base,i)
+
+	if i == 0:
+		shellcommand = "mkdir %s" % (state)
+		subprocess.run([shellcommand],shell=True)
+
+	ofilename = '%s/%s_on_%s_%s' % (state,state,base,i)
+
+	build.struct_generator(input_psf  = mypsf,
+			       input_pdb  = mypdb,
+			       seltext    = my_seltext,
+			       caps       = caplist,
+			       ofile      = ofilename,
+			       ftype      = 'qchem',
+			       rem        = 'myrem.rem',
+			       charge     = 0,
+			       mult       = 1,
+			       mm         = True,
+			       qmmm_mode  = 'janus',
+			       zerocharge = zcharge,
+			       params     = ['{path2params}/par_all36_prot.prm',
+					     '{path2params}/toppar_water_ions_modified.prm'])
